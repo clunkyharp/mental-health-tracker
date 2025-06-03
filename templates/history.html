@@ -1,0 +1,40 @@
+<!-- templates/history.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>История тревожности</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-4 sm:p-6">
+  <div class="max-w-5xl mx-auto bg-white p-4 sm:p-6 rounded-xl shadow">
+    <h1 class="text-xl sm:text-2xl font-bold mb-4">История записей</h1>
+
+    <div class="overflow-x-auto">
+      <table class="min-w-full table-auto border-collapse text-sm sm:text-base">
+        <thead>
+          <tr class="bg-gray-200 text-left">
+            <th class="p-2 border whitespace-nowrap">Дата и время</th>
+            <th class="p-2 border">Ситуация/Триггер</th>
+            <th class="p-2 border">Беспокойство</th>
+            <th class="p-2 border">Тревога (0–10)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for situation, worry, anxiety_level, created_at in entries %}
+          <tr class="border-t hover:bg-gray-50">
+            <td class="p-2 border">{{ created_at | format_datetime }}</td>
+            <td class="p-2 border">{{ situation }}</td>
+            <td class="p-2 border">{{ worry }}</td>
+            <td class="p-2 border">{{ anxiety_level }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <a href="/" class="text-blue-500 hover:underline mt-4 inline-block">← Назад</a>
+  </div>
+</body>
+</html>
+
