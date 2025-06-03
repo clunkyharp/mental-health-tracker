@@ -1,8 +1,6 @@
 from flask import Flask, render_template, request, redirect
 from models import init_db, insert_entry, get_entries
 from datetime import datetime
-import locale
-locale.setlocale(locale.LC_TIME, 'ru_RU.UTF-8')  # работает на Linux/macOS
 
 
 
@@ -26,8 +24,18 @@ def history():
 
 @app.template_filter('format_datetime')
 def format_datetime(value):
+    months = {
+        '01': 'января', '02': 'февраля', '03': 'марта',
+        '04': 'апреля', '05': 'мая', '06': 'июня',
+        '07': 'июля', '08': 'августа', '09': 'сентября',
+        '10': 'октября', '11': 'ноября', '12': 'декабря'
+    }
     dt = datetime.strptime(value, "%Y-%m-%d %H:%M:%S")
-    return dt.strftime("%d %B %Y, %H:%M")
+    day = dt.day
+    month = months[dt.strftime("%m")]
+    year = dt.year
+    time = dt.strftime("%H:%M")
+    return f"{day:02d} {month} {year}, {time}"
 
 if __name__ == '__main__':
     app.run(debug=True)
